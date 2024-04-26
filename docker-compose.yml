@@ -6,7 +6,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./mi-aplicacion.war:/usr/local/tomcat/webapps/apps-web.war
+      - ./apps-web.war:/usr/local/tomcat/webapps/apps-web.war
 
   nginx:
     image: nginx:latest
