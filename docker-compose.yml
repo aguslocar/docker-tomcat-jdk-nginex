@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  tomcat:
+    image: tomcat:10.1-jdk17-openjdk-slim
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./mi-aplicacion.war:/usr/local/tomcat/webapps/apps-web.war
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - tomcat
