@@ -7,14 +7,12 @@ RUN apt-get update && apt-get install -y openjdk-17-jdk
 # Instala Nginx
 RUN apt-get install -y nginx
 
-# Descarga y configura Tomcat 10.1
-ENV TOMCAT_MAJOR=10
-ENV TOMCAT_VERSION=10.1.0
+# Descarga y configura Tomcat 10.1.23
+ENV TOMCAT_VERSION=10.1.23
 ENV CATALINA_HOME=/opt/tomcat
 ENV PATH=$CATALINA_HOME/bin:$PATH
 
-RUN apt-get install -y wget \
-    && wget -O tomcat.tar.gz https://downloads.apache.org/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz \
+RUN wget -q https://dlcdn.apache.org/tomcat/tomcat-10/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz -O tomcat.tar.gz \
     && tar -xvf tomcat.tar.gz \
     && mv apache-tomcat-$TOMCAT_VERSION $CATALINA_HOME \
     && rm tomcat.tar.gz \
@@ -24,7 +22,7 @@ RUN apt-get install -y wget \
 EXPOSE 8080
 EXPOSE 80
 
-# Configura Nginx como proxy para Tomcat
+# Configurar Nginx como proxy para Tomcat
 COPY nginx.conf /etc/nginx/sites-available/default
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
